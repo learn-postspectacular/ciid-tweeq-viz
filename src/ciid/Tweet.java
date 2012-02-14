@@ -2,7 +2,6 @@ package ciid;
 
 import javax.xml.bind.annotation.XmlElement;
 
-import toxi.geom.ReadonlyVec2D;
 import toxi.geom.Vec2D;
 
 public class Tweet implements Comparable<Tweet> {
@@ -21,7 +20,7 @@ public class Tweet implements Comparable<Tweet> {
 
 	Vec2D screenPos;
 
-
+	@Override
 	public int compareTo(Tweet t) {
 		if (date < t.date) {
 			return -1;
@@ -33,8 +32,16 @@ public class Tweet implements Comparable<Tweet> {
 		}
 	}
 
-	public boolean isRollover(Vec2D mousePos) {
-		return mousePos.distanceTo(screenPos) < 10;
+	/**
+	 * Checks if the given point p is within the circle of snapDist units around
+	 * the tweet's screen position.
+	 * 
+	 * @param p
+	 * @param snapDist
+	 * @return true, if inside.
+	 */
+	public boolean isRollover(Vec2D p, float snapDist) {
+		return p.distanceTo(screenPos) < snapDist;
 	}
 
 }
